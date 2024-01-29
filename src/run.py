@@ -1,14 +1,12 @@
 from flask import Flask
 from flask_migrate import Migrate
-from src.models.db import db
-from src.models.user import User
+from models.classrooms.db import db
+from models.classrooms.user import User
 from src import config 
 
 
 def configure_blueprints(app: object) -> None:
-    from src.routes.user_route import classes
-
-    
+    from src.routes.user_route import classes    
     app.register_blueprint(classes)
 
 
