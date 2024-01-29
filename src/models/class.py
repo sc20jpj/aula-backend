@@ -9,6 +9,7 @@ class Class(db.Model):
     code = db.Column(db.String(120), unique=True, nullable=False)
     
     users = db.relationship('UserClass', back_populates='assigned_class')
+    quizzes = db.relationship('Quiz', back_populates='assigned_class')
 
     def to_dict(self):
         return {
@@ -20,4 +21,4 @@ class Class(db.Model):
     def __init__(self):
         self.id = str(uuid.uuid4())
     def __repr__(self):
-        return f"<User {self.username}>"
+        return f"<Class {self.name}>"
