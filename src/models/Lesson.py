@@ -2,15 +2,12 @@ from src.models.db import db
 import uuid
 
 
-class Class(db.Model):
+class Lesson(db.Model):
 
     id = db.Column(db.String(16), primary_key=True, nullable=False)
     name = db.Column(db.String(120), unique=True, nullable=False)
-    code = db.Column(db.String(120), unique=True, nullable=False)
-    
-    users = db.relationship('UserClass', back_populates='assigned_class')
-    quizzes = db.relationship('Quiz', back_populates='assigned_class')
-    lessons = db.relationship('Lesson', back_populates='assigned_class')
+    description = db.Column(db.String(120), unique=False, nullable=False)
+    assigned_class = db.relationship('Class', back_populates='quizzes')
 
     def to_dict(self):
         return {

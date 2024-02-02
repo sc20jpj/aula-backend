@@ -7,7 +7,7 @@ class User(db.Model):
     id = db.Column(db.String(16), primary_key=True, nullable=False)
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    teacher = db.Column(db.boolean,nullable=False)
+    teacher = db.Column(db.Boolean,nullable=False)
     imageId = db.Column(db.String(20),nullable=True)
     classes = db.relationship('UserClass', back_populates='user')
 
@@ -17,7 +17,6 @@ class User(db.Model):
             'username': self.username,
             'email': self.email,
             'teacher': self.teacher
-            # Add more fields as needed
         }
 
 

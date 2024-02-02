@@ -9,6 +9,8 @@ class UserClass(db.Model):
     
     user = db.relationship('User', back_populates='classes')
     assigned_class = db.relationship('Class', back_populates='users')
+
+    
     def to_dict(self):
         return {
             'points': self.points,
