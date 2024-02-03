@@ -18,6 +18,7 @@ class User(db.Model):
             'email': self.email,
             'teacher': self.teacher
         }
+    
 
 
     
