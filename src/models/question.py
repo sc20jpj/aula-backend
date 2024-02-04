@@ -3,7 +3,7 @@ import uuid
 
 
 class Question(db.Model):
-    id = db.Column(db.String(16), primary_key=True, nullable=False)
+    id = db.Column(db.String(36), primary_key=True, nullable=False)
     
     #arugement to be made about naming of this variable
 

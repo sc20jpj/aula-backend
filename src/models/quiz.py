@@ -3,11 +3,15 @@ import uuid
 
 
 class Quiz(db.Model):
-    id = db.Column(db.String(16), primary_key=True, nullable=False)
+    id = db.Column(db.String(36), primary_key=True, nullable=False)
     title = db.Column(db.String(120), unique=False, nullable=False)
     description = db.Column(db.String(120), unique=False, nullable=False)
     total_points = db.Column(db.Integer,nullable=False)
-    assigned_class = db.relationship('Class', back_populates='quizzes')
+
+
+    module_id = db.Column(db.String(16), db.ForeignKey('module.id'), nullable=False)
+    module = db.relationship('Module', back_populates='quizzes')
+    users = db.relationship('UserQuizTake', back_populates='quiz')
 
     def to_dict(self):
         return {

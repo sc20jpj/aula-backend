@@ -1,11 +1,20 @@
 meta {
-  name: classes
+  name: modules
   type: http
   seq: 1
 }
 
-get {
-  url: {{URL}}/classes
-  body: none
+post {
+  url: {{URL}}/users/new-user
+  body: json
   auth: none
+}
+
+body:json {
+  {
+    "email":"jackpjephson@gmail.com",
+    "name":"jackpjephson@gmail.com",
+    "nickname":"jj",
+    "cognito_id":"7a4958c1-9cb7-490d-ac45-c4764211c041"
+  }
 }

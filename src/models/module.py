@@ -2,15 +2,15 @@ from src.models.db import db
 import uuid
 
 
-class Class(db.Model):
+class Module(db.Model):
 
-    id = db.Column(db.String(16), primary_key=True, nullable=False)
+    id = db.Column(db.String(36), primary_key=True, nullable=False)
     name = db.Column(db.String(120), unique=True, nullable=False)
     code = db.Column(db.String(120), unique=True, nullable=False)
     
-    users = db.relationship('UserClass', back_populates='assigned_class')
-    quizzes = db.relationship('Quiz', back_populates='assigned_class')
-    lessons = db.relationship('Lesson', back_populates='assigned_class')
+    users = db.relationship('UserModule', back_populates='module')
+    quizzes = db.relationship('Quiz', back_populates='module')
+    lessons = db.relationship('Lesson', back_populates='module')
 
     def to_dict(self):
         return {
@@ -22,4 +22,4 @@ class Class(db.Model):
     def __init__(self):
         self.id = str(uuid.uuid4())
     def __repr__(self):
-        return f"<Class {self.name}>"
+        return f"<Module {self.name}>"
