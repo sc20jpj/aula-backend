@@ -5,10 +5,11 @@ import uuid
 class User(db.Model):
 
     id = db.Column(db.String(36), primary_key=True, nullable=False)
-    cognito_id = db.Column(db.String(36), unique=True, nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    name = db.Column(db.String(120), unique=True, nullable=False)
-    nickname = db.Column(db.String(120), unique=True, nullable=False)
+    cognito_username = db.Column(db.String(36), primary_key=True, nullable=False)
+
+    email = db.Column(db.String(120), unique=False, nullable=False)
+    name = db.Column(db.String(120), unique=False, nullable=False)
+    nickname = db.Column(db.String(120), unique=False, nullable=False)
 
     teacher = db.Column(db.Boolean, nullable=False, default=False)
     # for s3 ids but this should be linked to a file 

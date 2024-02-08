@@ -9,6 +9,7 @@ python-dotenv = "*"
 pymysql = "*"
 cryptography = "*"
 flask-cors = "*"
+flask-cognito = "*"
 
 [dev-packages]
 
