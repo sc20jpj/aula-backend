@@ -2,8 +2,6 @@ import json
 from flask import jsonify
 from http import HTTPStatus    
 
-import json
-
 def success(data,links=None):
     response = {
         "status": "Ok"
