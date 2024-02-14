@@ -1,7 +1,7 @@
 from src.models.db import db
 from src.models.user import User
 
-def add_user(data):
+def add(data):
 
     new_user = User()
 
@@ -16,12 +16,26 @@ def add_user(data):
 
     return new_user
 
-def get_user_by_id(user_id) -> User:
+def get_by_cognito_username(cognito_username) -> User:
+
+    queried_user = User.query.filter_by(cognito_username=cognito_username).one_or_none()
+
+
+    return queried_user
+
+def get_by_id(user_id) -> User:
 
     queried_user = User.query.get(user_id)
 
 
     return queried_user
+
+def get_all(user_id) -> [User]:
+
+    users = User.query.all()
+
+
+    return users
 
 
 
