@@ -15,7 +15,6 @@ def all_modules():
     try:
         data = {}
 
-        print("current user is ",current_user)
         modules = ModuleService.get_all()
         modules_array = []
         for module in modules:
@@ -36,7 +35,6 @@ def all_modules_user():
     try:
         data = {}
 
-        current_user.modules 
 
 
         modules = ModuleService.get_all()
@@ -45,12 +43,11 @@ def all_modules_user():
             module_data = module.to_dict()
 
             for user in module.users:
-                modules_array.append(module_data)
                 if user.teacher == 1:
                     module_data["teacher"] = user.name
-                
+            modules_array.append(module_data)
 
-
+        print(modules_array)
         data["modules"] = modules_array
 
         return ResponseService.success(data=data)
@@ -68,20 +65,18 @@ def add_module():
     
         new_module = ModuleService.add(data=data)
 
-        print(current_user.id)
         new_user_module = UserModuleService.add(user_id=current_user.id,module_id=new_module.id)
-        return ResponseService.success(data=new_module.to_dict())
+        return ResponseService.success(data=new_user_module.to_dict())
     
-    # except DataError as e:
-    #     return ResponseService.error(message="data"), HTTPStatus.BAD_REQUEST
-    # except IntegrityError as e:
-    #     return ResponseService.error(message="Module already exists"), HTTPStatus.CONFLICT
+    except DataError as e:
+        return ResponseService.error(message="data"), HTTPStatus.BAD_REQUEST
+    except IntegrityError as e:
+        return ResponseService.error(message="Module already exists"), HTTPStatus.CONFLICT
     except Exception as e:
-        print(e)
         return ResponseService.error(message="Exception"), HTTPStatus.INTERNAL_SERVER_ERROR
     
 
-@modules.route('/:moduleId', methods=['delete'])
+@modules.route('/<moduleId>', methods=['delete'])
 @cognito_auth_required
 @cognito_group_permissions(['teachers'])
 def delete_module(moduleId):

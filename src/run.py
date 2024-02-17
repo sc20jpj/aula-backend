@@ -17,20 +17,20 @@ from flask_cognito import CognitoAuth
 
 from src import config
 
-def configure_blueprints(app: object) -> None:
+def configure_blueprints(app):
     from src.routes.user_routes import users
     from src.routes.module_routes import modules
-
+    from src.routes.user_modules_routes import user_modules
     from src.errors.errors import error
     app.register_blueprint(users)
     app.register_blueprint(modules)
+    app.register_blueprint(user_modules)
     app.register_blueprint(error)
 
 
 
 def lookup_cognito_user(payload):
     """Look up user in our database from Cognito JWT payload."""
-    print(payload)
     return UserService.get_by_cognito_username(payload["cognito:username"])
 
 def create_app():
@@ -45,10 +45,10 @@ def create_app():
         @cogauth.identity_handler
         def handle_identity(payload):
             return lookup_cognito_user(payload)
-
+        CORS(app, resources={r"/*": {"origins": "*"}})
         db.create_all()
-        CORS(app)
         configure_blueprints(app=app)
+ 
 
     
 

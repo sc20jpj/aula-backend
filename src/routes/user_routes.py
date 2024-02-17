@@ -4,7 +4,7 @@ from sqlalchemy.exc import DataError
 from http import HTTPStatus
 from flask_cognito import cognito_auth_required,CognitoAuthError,current_cognito_jwt,current_user
 
-from src.services import UserService,UserModuleService
+from src.services import UserService,UserModuleService,ModuleService
 users = Blueprint('users', __name__, url_prefix='/users')
 
 @users.route('/check-auth', methods=['get'])
@@ -26,7 +26,6 @@ def check_auth():
 def add_user():
     try:
         data = request.json
-        print(data)
         new_user = UserService.add(data=data)
         return ResponseService.success(data=new_user.to_dict())
     except DataError as e:
@@ -44,12 +43,13 @@ def all_users():
         data = {}
 
         
-        print(current_user)
         users = UserService.get_all()
         users_array = []
         for user in users:
-            users_array.append(user.to_dict())
-        data["users"] = users_array
+            if user.teacher == False:
+                users_array.append(user.to_dict())
+
+        data = users_array
 
         return ResponseService.success(data=data)
     except DataError as e:
@@ -57,7 +57,29 @@ def all_users():
 
     except Exception as e:
         return ResponseService.error(message=e), HTTPStatus.NOT_FOUND
-    
 
 
     
+
+
+@users.route('/<moduleId>', methods=['get'])
+@cognito_auth_required
+def all_users_on_module(moduleId):
+    try:
+        data = {}
+
+        current_user.modules 
+        module = ModuleService.get_by_id(moduleId)
+        users = module.users
+        users_array = []
+
+        for user in users:
+            if user.teacher == False:
+                user_data = user.to_dict()
+                users_array.append(user_data)
+        
+        data["users"] = users_array
+
+        return ResponseService.success(data=data)
+    except DataError as e:
+        return ResponseService.error(message="data error"), HTTPStatus.BAD_REQUEST   

@@ -14,6 +14,8 @@ class UserModule(db.Model):
     
     def to_dict(self):
         return {
-            'points': self.points,
+            'user_id': self.user_id,
+            'module_id': self.module_id,
+            'points': self.points
         }
 

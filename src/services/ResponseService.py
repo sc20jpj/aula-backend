@@ -10,7 +10,6 @@ def success(data,links=None):
         response["data"] = data
     if links != None:
         response["links"] = links
-    print(response)
     return jsonify(response)
 
 def error(message):

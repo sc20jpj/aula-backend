@@ -1,0 +1,26 @@
+meta {
+  name: add-to-module
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{URL}}/user-modules/0f5ff78c-f2d8-4515-809a-5452562b9343
+  body: json
+  auth: none
+}
+
+body:json {
+  [
+    {
+      "user_id": "93884934-4087-4b23-af7d-8a8d0841bec9"
+    },
+    {
+      "user_id": "93884934-4087-4b23-af7d-8a8d0841bec9"
+    }
+  ]
+}
+
+vars:pre-request {
+  moduleId: 
+}

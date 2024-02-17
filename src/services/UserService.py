@@ -7,7 +7,6 @@ def add(data):
 
     for key, value in data.items():
         if hasattr(new_user, key):
-            print(key)
             setattr(new_user, key, value)
 
     db.session.add(new_user)
@@ -30,7 +29,7 @@ def get_by_id(user_id) -> User:
 
     return queried_user
 
-def get_all(user_id) -> [User]:
+def get_all() -> [User]:
 
     users = User.query.all()
 
