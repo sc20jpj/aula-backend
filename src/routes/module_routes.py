@@ -37,7 +37,7 @@ def all_modules_user():
 
 
 
-        modules = ModuleService.get_all()
+        modules = current_user.modules
         modules_array = []
         for module in modules:
             module_data = module.to_dict()

@@ -35,51 +35,43 @@ def add_user():
         return ResponseService.error(message=e), HTTPStatus.NOT_FOUND
     
 
-    
-@users.route('/all', methods=['get'])
-@cognito_auth_required
-def all_users():
-    try:
-        data = {}
-
-        
-        users = UserService.get_all()
-        users_array = []
-        for user in users:
-            if user.teacher == False:
-                users_array.append(user.to_dict())
-
-        data = users_array
-
-        return ResponseService.success(data=data)
-    except DataError as e:
-        return ResponseService.error(message="data"), HTTPStatus.BAD_REQUEST
-
-    except Exception as e:
-        return ResponseService.error(message=e), HTTPStatus.NOT_FOUND
-
-
-    
 
 
 @users.route('/<moduleId>', methods=['get'])
 @cognito_auth_required
-def all_users_on_module(moduleId):
+def users_to_add(moduleId):
     try:
         data = {}
 
         current_user.modules 
-        module = ModuleService.get_by_id(moduleId)
-        users = module.users
-        users_array = []
 
-        for user in users:
+        module = ModuleService.get_by_id(moduleId)
+        users = UserService.get_all()
+        users_on = module.users
+
+        users_not_on = [user for user in users if user not in users_on]
+        
+        users_on_data = []
+        users_not_on_data = []
+
+        print(module.users)
+        # threading could be used here
+        for user in users_on:
             if user.teacher == False:
                 user_data = user.to_dict()
-                users_array.append(user_data)
-        
-        data["users"] = users_array
+                users_on_data.append(user_data)
+        for user in users_not_on:
+            if user.teacher == False:
+                user_data = user.to_dict()
+                users_not_on_data.append(user_data)
 
+       
+        data["users_on"] = users_on_data
+        data["users_not_on"] = users_not_on_data
+        print(data)
         return ResponseService.success(data=data)
     except DataError as e:
         return ResponseService.error(message="data error"), HTTPStatus.BAD_REQUEST   
+
+
+ 
