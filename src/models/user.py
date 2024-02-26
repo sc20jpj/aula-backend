@@ -1,4 +1,5 @@
 from src.models.db import db 
+from sqlalchemy.ext.associationproxy import association_proxy
 import uuid
 
 
@@ -15,7 +16,8 @@ class User(db.Model):
     # for s3 ids but this should be linked to a file 
     imageId = db.Column(db.String(20),nullable=True)
     
-    modules = db.relationship('UserModule', back_populates='user')
+    user_modules = db.relationship('UserModule', back_populates='user')
+    modules = association_proxy('user_modules', 'module')
     quizzes = db.relationship('UserQuizTake', back_populates='user')
 
 
@@ -32,4 +34,4 @@ class User(db.Model):
     def __init__(self):
         self.id = str(uuid.uuid4())
     def __repr__(self):
-        return f"<User {self.username}>"
+        return f"<User {self.id}>"

@@ -10,6 +10,7 @@ pymysql = "*"
 cryptography = "*"
 flask-cors = "*"
 flask-cognito = "*"
+pytest = "*"
 
 [dev-packages]
 

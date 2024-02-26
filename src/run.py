@@ -10,22 +10,28 @@ from src.models.lesson import Lesson
 
 from src.models.user_module import UserModule
 from src.models.user_quiz_take import UserQuizTake
+from src.services import UserService
 from flask_cognito import CognitoAuth
-
-
 
 
 
 from src import config
 
-def configure_blueprints(app: object) -> None:
-    from src.routes.user_route import users
+def configure_blueprints(app):
+    from src.routes.user_routes import users
+    from src.routes.module_routes import modules
+    from src.routes.user_modules_routes import user_modules
     from src.errors.errors import error
     app.register_blueprint(users)
+    app.register_blueprint(modules)
+    app.register_blueprint(user_modules)
     app.register_blueprint(error)
 
 
 
+def lookup_cognito_user(payload):
+    """Look up user in our database from Cognito JWT payload."""
+    return UserService.get_by_cognito_username(payload["cognito:username"])
 
 def create_app():
     app = Flask(__name__)
@@ -35,11 +41,15 @@ def create_app():
         db.init_app(app=app)
         migrate = Migrate(app=app, db=db)
         cogauth = CognitoAuth(app=app)
-        db.create_all()
-        CORS(app)
-        configure_blueprints(app=app)
 
-        # Enable CORS for all routes
+        @cogauth.identity_handler
+        def handle_identity(payload):
+            return lookup_cognito_user(payload)
+        CORS(app, resources={r"/*": {"origins": "*"}})
+        db.create_all()
+        configure_blueprints(app=app)
+ 
+
     
 
     return app
