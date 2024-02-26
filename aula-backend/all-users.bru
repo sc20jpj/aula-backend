@@ -1,0 +1,28 @@
+meta {
+  name: all-users
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{URL}}/users
+  body: json
+  auth: none
+}
+
+query {
+  : 
+}
+
+auth:bearer {
+  token: Bearer eyJraWQiOiJtSUdXcDFBN0IxN1hCaWtXbFVMeXBlazRSWXFLN21LbkJTSmNOdDdBQTJBPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJhOWZjY2UyZi1mYzg4LTQ0YTQtOGJjMy1iMmZlOGEzMDQ1NGUiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuZXUtd2VzdC0yLmFtYXpvbmF3cy5jb21cL2V1LXdlc3QtMl9hdk5GS2VKVXkiLCJjbGllbnRfaWQiOiIzNDljcnAwNWJvazgxYnI2M2lpYWExOWJnOCIsIm9yaWdpbl9qdGkiOiIyNjVkMGI2Ni0zODQ2LTQ5MWUtYTUxNy1mZWZhMjg1ZTIxNDkiLCJldmVudF9pZCI6IjRmNTAxNzE2LWEwODAtNGNmZC05YjNkLWY1ZGI5NDdlZmRhMyIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiYXdzLmNvZ25pdG8uc2lnbmluLnVzZXIuYWRtaW4iLCJhdXRoX3RpbWUiOjE3MDczMjUzNzQsImV4cCI6MTcwNzMyODk3NCwiaWF0IjoxNzA3MzI1Mzc0LCJqdGkiOiI1MzkwMzA1Ni0yZDJiLTRlZWUtOWMzYy01ZTkxNTZlZWU2YmIiLCJ1c2VybmFtZSI6ImE5ZmNjZTJmLWZjODgtNDRhNC04YmMzLWIyZmU4YTMwNDU0ZSJ9.ax89uAPDIMhSEgOTpFkxcPrJVYM6TJFzrRNhFrME__-fqP1crEMHYX425qKkx58tTxrOUT8C02WbLw0BX-8bkYz8mkUGm1OjxsIW2xK2lqxITWyNJsKJ5D8UGEhn7GJYyBomQQLUyZkUQ9UKQ2_MzD8bl9hbjxiBNgNpD5_zMGXbX1do_fNvnFIoaUnYX84HUXNhevIR8mOAzJQS20XEru4OZl8vyBRzRMHXr0lmwV4jyoBLrZY9tE5mTNkCYl-eAYjopwqhM10p1ZggozS77RyIOskXDWjwI5hEt9W6BSgphhL7u1vGFcuHzamyJ71tppXyHpSGEQMlY8dLhUsS5w
+}
+
+body:json {
+  {
+    "email":"jackpjephson@gmail.com",
+    "name":"jackpjephson@gmail.com",
+    "nickname":"jj",
+    "cognito_id":"7a4958c1-9cb7-490d-ac45-c4764211c041"
+  }
+}
