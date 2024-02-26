@@ -55,7 +55,10 @@ def all_modules_user():
         return ResponseService.error(message="Module already exists"), HTTPStatus.CONFLICT
     except DataError as e:
         return ResponseService.error(message="data error"), HTTPStatus.BAD_REQUEST
-    
+
+# this sends back a UserModule not a module 
+# bad practice  
+# this adds both a module and a usermodule 
 @modules.route('', methods=['post'])
 @cognito_auth_required
 @cognito_group_permissions(['teachers'])
@@ -66,7 +69,9 @@ def add_module():
         new_module = ModuleService.add(data=data)
 
         new_user_module = UserModuleService.add(user_id=current_user.id,module_id=new_module.id)
-        return ResponseService.success(data=new_user_module.to_dict())
+
+
+        return ResponseService.success(data=new_module.to_dict())
     
     except DataError as e:
         return ResponseService.error(message="data"), HTTPStatus.BAD_REQUEST

@@ -30,9 +30,17 @@ def get_all() -> [Module]:
 
     return modules
 
-def delete(module_id) -> [Module]:
+def delete(module_id) -> Module:
 
     module = Module.query.get(module_id)
+    # handles cascading deletes while avoiding the issues with sqlalchemy 
+    # doesnt do cascades well 
+    for quiz in module.quizzes:
+        db.session.delete(quiz)
+    for lesson in module.lessons:
+        db.session.delete(lesson)
+    for user_module in module.user_modules:
+        db.session.delete(user_module)
     db.session.delete(module)
     db.session.commit()
 
