@@ -21,17 +21,29 @@ def configure_blueprints(app):
     from src.routes.user_routes import users
     from src.routes.module_routes import modules
     from src.routes.user_modules_routes import user_modules
+    from src.routes.lesson_routes import lessons
+    from src.routes.document_routes import documents
     from src.errors.errors import error
+  
     app.register_blueprint(users)
     app.register_blueprint(modules)
     app.register_blueprint(user_modules)
+    app.register_blueprint(lessons)
+    app.register_blueprint(documents)
+
+
     app.register_blueprint(error)
 
 
 
 def lookup_cognito_user(payload):
     """Look up user in our database from Cognito JWT payload."""
-    return UserService.get_by_cognito_username(payload["cognito:username"])
+    # for some reasons the admin auth sends the payload differently worth checking this later 
+    try:
+        return UserService.get_by_cognito_username(payload["cognito:username"])
+    except KeyError:
+        return UserService.get_by_cognito_username(payload["username"])
+
 
 def create_app():
     app = Flask(__name__)
@@ -46,7 +58,9 @@ def create_app():
         def handle_identity(payload):
             return lookup_cognito_user(payload)
         CORS(app, resources={r"/*": {"origins": "*"}})
-        db.create_all()
+        with app.app_context():
+                db.create_all()
+
         configure_blueprints(app=app)
  
 

@@ -3,8 +3,8 @@ import uuid
 
 
 class UserQuizTake(db.Model):
-    user_id = db.Column(db.String(16), db.ForeignKey('user.id'),primary_key=True)
-    quiz_id = db.Column(db.String(16), db.ForeignKey('quiz.id'),primary_key=True)
+    user_id = db.Column(db.String(36), db.ForeignKey('user.id'),primary_key=True)
+    quiz_id = db.Column(db.String(36), db.ForeignKey('quiz.id'),primary_key=True)
     points = db.Column(db.Integer,nullable=False)
     
     user = db.relationship('User', back_populates='quizzes')

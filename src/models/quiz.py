@@ -9,7 +9,7 @@ class Quiz(db.Model):
     total_points = db.Column(db.Integer,nullable=False)
 
 
-    module_id = db.Column(db.String(16), db.ForeignKey('module.id'), nullable=False)
+    module_id = db.Column(db.String(36), db.ForeignKey('module.id'), nullable=False)
     module = db.relationship('Module', back_populates='quizzes')
     users = db.relationship('UserQuizTake', back_populates='quiz')
 
