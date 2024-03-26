@@ -34,9 +34,7 @@ def all_modules():
 def all_modules_user():
     try:
         data = {}
-
-
-
+        
         modules = current_user.modules
         modules_array = []
         for module in modules:

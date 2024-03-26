@@ -2,6 +2,7 @@ import os
 import pytest
 import random
 import string
+import boto3
 from dotenv import load_dotenv
 from src.run import create_app
 
@@ -32,14 +33,30 @@ def random_code():
 
 
 @pytest.fixture(scope="session")
-def bearer_token(load_env):
-    """
-    Fixture to get bearer token from environment variable
-    """
-    token = os.getenv('BEARER')
-    if not token:
-        raise ValueError("Bearer token not found in .env file")
-    return token
+def bearer_token():
+    client = boto3.client('cognito-idp',region_name=os.getenv("REGION"))
+    print(os.getenv("COGNITO_USERNAME"))
+    try:
+        response = client.initiate_auth(
+            AuthFlow='USER_PASSWORD_AUTH',
+            AuthParameters={
+                'USERNAME': os.getenv("COGNITO_USERNAME"),
+                'PASSWORD': os.getenv("COGNITO_PASSWORD")
+            },
+            ClientId=os.getenv("CLIENT_ID"),
+
+
+        )
+
+        return response['AuthenticationResult']['AccessToken']
+
+    except client.exceptions.NotAuthorizedException as e:
+        print("Authentication failed:", e)
+    except client.exceptions.UserNotFoundException as e:
+        print("User not found:", e)
+    except Exception as e:
+        print("Error:", e)
+
 
 
 @pytest.fixture(autouse=True)

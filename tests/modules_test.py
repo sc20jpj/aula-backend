@@ -35,7 +35,7 @@ def test_delete_module(client,bearer_token ,random_code):
         "name": "Example Module",
         "code": random_code  
     }
-
+    
     headers = {
         "Authorization": f"Bearer {bearer_token}",
         "Content-Type": "application/json"
@@ -53,12 +53,21 @@ def test_delete_module(client,bearer_token ,random_code):
     assert  response_delete.status_code == HTTPStatus.OK and delete_id == module_id
 
 
-def test_all_modules_for_user(client,bearer_token ,random_code):
+
+
+# assumes user has modules will fail otherwise 
+def test_all_modules_for_user(client,bearer_token):
+    headers = {
+        "Content-Type": "application/json"
+    }
+    response_unatuh = client.get("/lessons/2b2e2c30-ec2c-44e9-bcde-d2b9fd61150a", headers=headers)
+    assert response_unatuh.status_code == HTTPStatus.UNAUTHORIZED
+
     headers = {
         "Authorization": f"Bearer {bearer_token}",
         "Content-Type": "application/json"
     }
 
-    response = client.get("/modules", headers=headers)
+    response = client.get("/modules/>", headers=headers)
 
     assert response.status_code == HTTPStatus.OK
