@@ -13,6 +13,9 @@ class Module(db.Model):
     users = association_proxy('user_modules', 'user')
 
     quizzes = db.relationship('Quiz', back_populates='module')
+
+
+    
     lessons = db.relationship('Lesson', back_populates='module')
 
     def to_dict(self):

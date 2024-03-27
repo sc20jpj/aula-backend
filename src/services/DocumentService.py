@@ -31,4 +31,3 @@ def set_s3_url(document,s3_url):
     document.s3_url = s3_url
     db.session.commit()
     return document
-

@@ -7,10 +7,16 @@ class UserQuizTake(db.Model):
     quiz_id = db.Column(db.String(36), db.ForeignKey('quiz.id'),primary_key=True)
     points = db.Column(db.Integer,nullable=False)
     
+    # timer could even be set here 
+    # individual feedback 
+    # feedback 
+
+    # feedback won't be given here but it could
+
     user = db.relationship('User', back_populates='quizzes')
     quiz = db.relationship('Quiz', back_populates='users')
 
-
+    
     def to_dict(self):
         return {
             'points': self.points,

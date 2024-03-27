@@ -1,4 +1,5 @@
 from src.models.db import db 
+from sqlalchemy.ext.associationproxy import association_proxy
 import uuid
 
 
@@ -10,8 +11,6 @@ class UserModule(db.Model):
     user = db.relationship('User', back_populates='user_modules')
     module = db.relationship('Module', back_populates='user_modules')
 
-
-    
     def to_dict(self):
         return {
             'user_id': self.user_id,

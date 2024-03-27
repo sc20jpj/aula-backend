@@ -7,9 +7,14 @@ from src.models.user import User
 from src.models.module import Module
 from src.models.quiz import Quiz
 from src.models.lesson import Lesson
+from src.models.question import Question
+from src.models.choice import Choice
 
 from src.models.user_module import UserModule
 from src.models.user_quiz_take import UserQuizTake
+from src.models.user_question_choice import UserQuestionChoice
+
+
 from src.services import UserService
 from flask_cognito import CognitoAuth
 
@@ -47,7 +52,7 @@ def lookup_cognito_user(payload):
 
 def create_app():
     app = Flask(__name__)
-    
+    # this might need editing changes getting detected weridly
     with app.app_context():
         app.config.from_object(config)
         db.init_app(app=app)
@@ -58,8 +63,8 @@ def create_app():
         def handle_identity(payload):
             return lookup_cognito_user(payload)
         CORS(app, resources={r"/*": {"origins": "*"}})
-        with app.app_context():
-                db.create_all()
+        
+        db.create_all()
 
         configure_blueprints(app=app)
  

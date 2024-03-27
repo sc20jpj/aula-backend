@@ -1,4 +1,5 @@
 from src.models.db import db 
+from sqlalchemy.ext.associationproxy import association_proxy
 import uuid
 
 
@@ -11,7 +12,35 @@ class Quiz(db.Model):
 
     module_id = db.Column(db.String(36), db.ForeignKey('module.id'), nullable=False)
     module = db.relationship('Module', back_populates='quizzes')
-    users = db.relationship('UserQuizTake', back_populates='quiz')
+    users_takes = db.relationship('UserQuizTake', back_populates='quiz')
+
+
+    # users who've taken the quiz
+    # probably only use for admin 
+    users = association_proxy('user_quiz_take', 'user')
+    
+    questions = db.relationship('Question', back_populates='quiz')
+
+    """
+    "id"
+    "title"
+    
+    questions: [
+        "title": 
+        "number": 
+        "choices": [
+            {
+                "title": "correct" 
+                "correct": true
+
+            }
+        ]
+    ]
+
+
+    """
+
+
 
     def to_dict(self):
         return {
